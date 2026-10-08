@@ -1,12 +1,12 @@
 {
-    "name": "athira_portfolio",
-    "short_name": "athira_portfolio",
+    "name": "Athira SM · Flutter Developer",
+    "short_name": "Athira SM",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#F6F4EF",
+    "theme_color": "#174C3B",
+    "description": "Athira SM's Flutter developer portfolio.",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {

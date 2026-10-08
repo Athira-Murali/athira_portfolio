@@ -16,6 +16,7 @@ dependencies:
 
 
   cupertino_icons: ^1.0.8
+  url_launcher: ^6.3.3
 
 dev_dependencies:
   flutter_test:
@@ -34,10 +35,12 @@ flutter:
   assets:
     - assets/images/
     - assets/docs/
+    # The supplied Cortado case-study artwork is preserved in the checked-in
+    # web bundle and included here so Flutter packages it in fresh builds too.
+    - dist/assets/assets/images/cortado_cafe.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-
 

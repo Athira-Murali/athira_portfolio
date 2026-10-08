@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(const PortfolioApp());
 
@@ -353,8 +354,9 @@ class SelectedWork extends StatelessWidget {
             description:
                 'A seamless coffee experience for dine-in, takeaway, delivery and car pickup. The app learns each customer’s taste and keeps their favourite coffee one tap away.',
             tags: ['Flutter', 'BLoC', 'REST APIs', 'Firebase'],
-            image: 'assets/images/cortado_cafe.png',
+            image: 'dist/assets/assets/images/cortado_cafe.png',
             accent: C.orange,
+            imageFit: BoxFit.contain,
           ),
           const SizedBox(height: 28),
           const ProjectCard(
@@ -375,7 +377,7 @@ class SelectedWork extends StatelessWidget {
             description:
                 'A cross-platform ordering kiosk built from scratch for mobile, tablet and large displays—with product customisation, OTP, loyalty points and secure multi-method payments.',
             tags: ['Flutter', 'BLoC / Cubit', 'RTL', 'WebView'],
-            image: 'assets/images/cortado_kiosk.png',
+            image: 'assets/images/cortado_kiosk_playstore_banner.png',
             accent: Color(0xFF202526),
             imageFit: BoxFit.contain,
           ),
@@ -438,6 +440,7 @@ class ProjectCard extends StatefulWidget {
 
 class _ProjectCardState extends State<ProjectCard> {
   bool hover = false;
+
   @override
   Widget build(BuildContext context) => MouseRegion(
     onEnter: (_) => setState(() => hover = true),
@@ -512,7 +515,19 @@ class _ProjectCardState extends State<ProjectCard> {
             padding: const EdgeInsets.all(22),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.asset(widget.image!, fit: widget.imageFit),
+              child: Image.asset(
+                widget.image!,
+                fit: widget.imageFit,
+                errorBuilder: (_, _, _) => Center(
+                  child: Icon(
+                    Icons.phone_android_rounded,
+                    size: 72,
+                    color: widget.accent.computeLuminance() < .35
+                        ? Colors.white70
+                        : C.ink.withValues(alpha: .55),
+                  ),
+                ),
+              ),
             ),
           );
           if (stacked) {
@@ -808,7 +823,11 @@ class Contact extends StatelessWidget {
               SizedBox(height: 24),
               ContactLine('PHONE', '+91 70126 69720'),
               SizedBox(height: 24),
-              ContactLine('GITHUB', 'github.com/Athira-Murali'),
+              ContactLine(
+                'GITHUB',
+                'github.com/Athira-Murali',
+                url: 'https://github.com/Athira-Murali',
+              ),
             ],
           );
           return Flex(
@@ -833,8 +852,17 @@ class Contact extends StatelessWidget {
 }
 
 class ContactLine extends StatelessWidget {
-  const ContactLine(this.label, this.value, {super.key});
+  const ContactLine(this.label, this.value, {super.key, this.url});
   final String label, value;
+  final String? url;
+
+  Future<void> openLink() async {
+    final target = Uri.parse(url!);
+    if (!await launchUrl(target, mode: LaunchMode.externalApplication)) {
+      debugPrint('Could not open $target');
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -848,10 +876,32 @@ class ContactLine extends StatelessWidget {
         ),
       ),
       const SizedBox(height: 8),
-      SelectableText(
-        value,
-        style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
-      ),
+      if (url == null)
+        SelectableText(
+          value,
+          style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
+        )
+      else
+        Semantics(
+          link: true,
+          label: 'Open $value',
+          child: InkWell(
+            onTap: openLink,
+            borderRadius: BorderRadius.circular(4),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              child: Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.w700,
+                  decoration: TextDecoration.underline,
+                  decorationThickness: 1.5,
+                ),
+              ),
+            ),
+          ),
+        ),
     ],
   );
 }

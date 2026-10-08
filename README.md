@@ -1,17 +1,38 @@
-# athira_portfolio
+# Athira SM — Portfolio
 
-A new Flutter project.
+A responsive Flutter Web portfolio showcasing my work, experience, and skills.
 
-## Getting Started
+## Run locally
 
-This project is a starting point for a Flutter application.
+```sh
+flutter pub get
+flutter run -d chrome
+```
 
-A few resources to get you started if this is your first Flutter project:
+## Publish the portfolio
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+This repository includes a GitHub Pages workflow. To get a public link:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Create a GitHub repository and push this project to its `main` branch.
+2. On GitHub, open **Settings → Pages**.
+3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+4. Open the **Actions** tab and wait for **Deploy portfolio to GitHub Pages** to finish.
+
+The public URL will be:
+
+```text
+https://YOUR-GITHUB-USERNAME.github.io/YOUR-REPOSITORY-NAME/
+```
+
+Every later push to `main` automatically republishes the website. Add the public
+URL to the contact/header section of the résumé, preferably as a clickable
+**Portfolio** link.
+
+## Build manually
+
+```sh
+flutter build web --release
+```
+
+The generated static website is placed in `build/web/` and can also be uploaded
+to Netlify, Cloudflare Pages, Firebase Hosting, or another static host.
